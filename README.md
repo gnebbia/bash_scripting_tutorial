@@ -227,6 +227,8 @@ rm !([bc]) #removes all but b and c
 rm !(*.txt) #removes all files except those ending with .txt
 ls !(*jpg|*bmp)
 ```
+
+## Regex
 Let's see an example of regex:
 ```sh
 # Regex check is done within
