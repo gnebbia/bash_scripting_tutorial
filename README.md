@@ -9,6 +9,7 @@ First rule, even if online we see plenty of examples with ```echo```, we should 
 
 ## Good Rules for Bash Scripting
 Here some good rules when writing Bash:
+
 * Always prefer printf to echo
 * Quote every variable, always, except when we want to compress spaces
 * Don't expect speed in Bash scripts, but if you want to optimize prefer builtins instead of external prograsm
@@ -210,8 +211,10 @@ In Bash we have basically three way for pattern matching
 ## Globs
 Let's see some example, where we can use globs to select multiple files:
 
+```sh
 files=(*) #selects all the files in the current directory
 files=(../*.tar.gz) #selects all the .tar.gz files in the previous directory
+```
 
 ## Extended Globs Examples
 Once we have enabled extended globs with:
@@ -297,7 +300,7 @@ while read -r first_name last_name phone; do
   printf '%s\n' "$last_name"
 done < "$file"
 ```
-Remember that when dealing with arrays, @ expands multiple arguments, while * concatenates them, so never do for field in "${array[*]}" !
+Remember that when dealing with arrays, @ expands multiple arguments, while * concatenates them, so never do for field in ```"${array[*]}"``` !
 
 ## String and Arrays Manipulations
 Let's see some example of string manipulation which will allow us to use builtins instead of awk, sed or perl, in order to gain some speed and not create subprocesses.
@@ -467,13 +470,43 @@ and a new application to be loaded. It also makes it very hard to follow the
 logic in your script!
 
 
+## Bash Shortcuts
+A list of common shortcuts when dealing with bash command line:
+```sh
+CTRL+A  # move to beginning of line
+CTRL+B  # moves backward one character
+CTRL+C  # halts the current command
+CTRL+D  # deletes one character backward or logs out of current session, it is similar to exit
+CTRL+E  # moves to end of line
+CTRL+F  # moves forward one character
+CTRL+G  # aborts the current editing command and ring the terminal bell
+CTRL+J  # same as RETURN
+CTRL+K  # deletes from the cursor to end of line
+CTRL+L  # clears screen 
+CTRL+M  # same as RETURN
+CTRL+N  # next line in command history
+CTRL+O  # same as RETURN, then displays next line in history file
+CTRL+P  # previous line in command history
+CTRL+R  # searches backward
+CTRL+S  # searches forward
+CTRL+T  # transposes two characters
+CTRL+U  # removes backward from cursor to the beginning of line
+CTRL+V  # makes the next character typed verbatim
+CTRL+W  # removes the word behind the cursor
+CTRL+X  # lists the possible filename completions of the current word
+CTRL+Y  # retrieves (yank) last item killed
+CTRL+Z  # stops the current command, resume with fg in the foreground or bg in the background
+```
+
+
+
 
 ### References
 * [Bash_Reference] - Bash Reference!
 
 
 ## TODO
-Integrate from here [Bash Tutorial]: <https://github.com/denysdovhan/bash-handbook>
+Integrate from here [Bash Tutorial](https://github.com/denysdovhan/bash-handbook)
 
 
 License
