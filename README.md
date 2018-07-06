@@ -1,4 +1,5 @@
 # Bash Scripting
+
 In order to start a script in bash we do:
 ```sh
 #!/usr/bin/env  bash
