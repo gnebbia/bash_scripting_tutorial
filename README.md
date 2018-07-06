@@ -5,7 +5,7 @@ In order to start a script in bash we do:
 #!/usr/bin/env  bash
 printf "%s" "Hello World"
 ```
-First rule, even if online we see plenty of examples with "echo", we should  always use printf instead of the famous "echo" command.
+First rule, even if online we see plenty of examples with ```echo```, we should  always use ```printf``` instead of the famous ```echo``` command.
 
 ## Good Rules for Bash Scripting
 Here some good rules when writing Bash:
@@ -472,8 +472,9 @@ logic in your script!
 * [Bash_Reference] - Bash Reference!
 
 
-### TODO
-Integrate from here https://github.com/denysdovhan/bash-handbook
+## TODO
+Integrate from here [Bash Tutorial]: <https://github.com/denysdovhan/bash-handbook>
+
 
 License
 ----
