@@ -2,7 +2,7 @@
 In order to start a script in bash we do:
 ```sh
 #!/usr/bin/env  bash
-printf "%s" Hello World"
+printf "%s" "Hello World"
 ```
 First rule, even if online we see plenty of examples with "echo", we should  always use printf instead of the famous "echo" command.
 
