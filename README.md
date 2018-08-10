@@ -5,15 +5,16 @@ In order to start a script in bash we do:
 #!/usr/bin/env  bash
 printf "%s" "Hello World"
 ```
-First rule, even if online we see plenty of examples with ```echo```, we should  always use ```printf``` instead of the famous ```echo``` command.
+First rule, even if online we see plenty of examples with `echo`, we should  always use `printf` instead of the famous `echo` command.
 
 ## Good Rules for Bash Scripting
+
 Here some good rules when writing Bash:
 
 * Always prefer printf to echo
 * Quote every variable, always, except when we want to compress spaces
 * Don't expect speed in Bash scripts, but if you want to optimize prefer builtins instead of external prograsm
-* Don't use cat but do this: ```sh content=$(< fileName)```
+* Don't use cat but do this: `content=$(< fileName)`
 * Always use the new test command [[ instead of the old test [
 * Use "set +x" and "set -x" to enable debugging mode
 * Use "set -r" to set restricted mode, this can be useful for security reasons
@@ -126,9 +127,9 @@ set -eu -o pipefail
 main "$@"
 ```
 ## Executing Commands in Shell Scripts
-In order to execute a command and save its stdout we should always use $() and not backticks ``, this for two reasons mainly:
-    - $() allows for nested commands, while `` does not without escaping
-    - $() is POSIX portable and compliant, while `` does not
+In order to execute a command and save its stdout we should always use $() and not backticks ````, this for two reasons mainly:
+    - $() allows for nested commands, while ```` does not without escaping
+    - $() is POSIX portable and compliant, while ```` does not
 
 ## Functions 
 It is a good idea for scripts larger than a screen page to build functions, and make our program more modular as possible.There are no return values in bash, so we can return values by printing a string like:
@@ -151,10 +152,10 @@ all the functions related to a module should be contained inside the relative mo
 To refer to all arguments passed to a function we can use "$@", and to remove the first argument we can use "shift", this is similar to Perl.
 ## Advanced Redirection
 There are more advanced redirection operators from newer versions of bash, the operators are:
-    - <<
-    - <<<
-    - <()
-    - >()
+    - `<<`
+    - `<<<`
+    - `<()`
+    - `>()`
 let's see some use cases in order to explain these:
 ```sh
 cat fileName | tr ' ' '\n'
@@ -163,8 +164,8 @@ an alternative to this notation is a simpler:
 ```sh
 tr ' ' '\n' < fileName
 ```
-so we can use < to redirect the stdin to an actual file.
-What if the content on which we want to apply our tr is not in a file but in a variable ? Well, this is the case for "<<<", let's see an example:
+so we can use `<` to redirect the stdin to an actual file.
+What if the content on which we want to apply our tr is not in a file but in a variable ? Well, this is the case for `<<<`, let's see an example:
 ```sh
 content="this is an example string"
 tr ' ' '\n' <<< "$content"
@@ -175,10 +176,14 @@ diff -u file1 file2
 ```
 how we could apply a diff on the output of another command instead of a file ?
 Well we could first save the command output to a file for both command and then use those files, but there is a syntactic faster solution:
+
 ```sh
 diff -u <(ls) <(ls anotherDir/)
 ```
-Now let's see the << HEREDOC or HERESTRING (a heredoc with one string) example, this is useful when we want to create strings, the most common use of heredocs is dumping documentation, for example:
+
+Now let's see the `<<` HEREDOC or HERESTRING (a heredoc with one string) example, this is useful when we want to create strings,
+the most common use of heredocs is dumping documentation, for example:
+
 ```sh
 usage() {
     cat <<EOF
@@ -188,7 +193,8 @@ It might be a few lines long, but shouldn't be excessive.
 EOF
 }
 ```
-We can have better indentation with "<<" accompanied by "-" format, for example:
+
+We can have better indentation with `<<` accompanied by `-` format, for example:
 ```sh
 usage() {
     cat <<-EOF
@@ -198,7 +204,7 @@ usage() {
     EOF
 }
 ```
-Another example with herestring but using <<< is by using:
+Another example with herestring but using `<<<` is by using:
 ```sh
 grep proud <<<"I am a proud sentence"
 ```
@@ -300,7 +306,7 @@ while read -r first_name last_name phone; do
   printf '%s\n' "$last_name"
 done < "$file"
 ```
-Remember that when dealing with arrays, @ expands multiple arguments, while * concatenates them, so never do for field in ```"${array[*]}"``` !
+Remember that when dealing with arrays, @ expands multiple arguments, while * concatenates them, so never do for field in `"${array[*]}"` !
 
 ## String and Arrays Manipulations
 Let's see some example of string manipulation which will allow us to use builtins instead of awk, sed or perl, in order to gain some speed and not create subprocesses.
@@ -367,7 +373,8 @@ printf "%s\n" "${ip_elements[0]}"
 
 We can create an associative array and create some key-value pair with the following code:
 
-```sh declare -A my_assoc
+```sh
+declare -A my_assoc
 my_assoc[name]="giuseppe"
 my_assoc[surname]="nebbione"
 ```
@@ -438,14 +445,18 @@ Command groups are also useful to shorten certain common tasks:
 ```sh
 [[ -f $CONFIGFILE ]] || { echo "Config file $CONFIGFILE not found" >&2; exit 1; }
 ```
+
 ## File Redirection and Process Substitution
 
 Let's see how to use the powerful find command to make an array of files
 ```sh
 files=()
-while read -r -d $'\0'; do
-	files+=("$REPLY")
+while read -r -d $'\0' line; do
+	files+=("$line")
 done < <(find /foo -print0)
+
+# notice that is is essential to use print0 in this find command
+# in order to be able to produce a list which can be read by `read -r`
 ```
 
 ## Heredocs and Herestrings
@@ -506,12 +517,12 @@ CTRL+Z  # stops the current command, resume with fg in the foreground or bg in t
 
 
 ## TODO
-Integrate from here [Bash Tutorial](https://github.com/denysdovhan/bash-handbook)
-
+* Integrate from here [Bash Tutorial](https://github.com/denysdovhan/bash-handbook)
+* Insert more snippets of code which accomplish specific functionalities
 
 License
 ----
 
-GPL
+GPLv3
 
-   [Bash_Reference]: <http://mywiki.wooledge.org/>
+[Bash_Reference]: <http://mywiki.wooledge.org/>
