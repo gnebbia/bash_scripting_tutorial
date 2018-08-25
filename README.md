@@ -126,7 +126,27 @@ set -eu -o pipefail
     # SIGNAL TRAPS
 main "$@"
 ```
+Let's see the meaning of some debugging techniques with bash:
+
+
+In Bash scripts, use set -x (or the variant set -v, which logs raw input,
+including unexpanded variables and comments) for debugging output. Use
+strict modes unless you have a good reason not to: Use set -e to abort on
+errors (nonzero exit code). Use set -u to detect unset variable usages.
+Consider set -o pipefail too, to on errors within pipes, too (though read up
+on it more if you do, as this topic is a bit subtle). For more involved
+scripts, also use trap on EXIT or ERR. A useful habit is to start a script
+like this, which will make it detect and abort on common errors and print a
+message:
+
+```sh
+set -euo pipefail 
+trap "echo 'error: Script failed: see failed command above'" ERR
+```
+
+
 ## Executing Commands in Shell Scripts
+
 In order to execute a command and save its stdout we should always use $() and not backticks ````, this for two reasons mainly:
     - $() allows for nested commands, while ```` does not without escaping
     - $() is POSIX portable and compliant, while ```` does not
@@ -459,6 +479,20 @@ done < <(find /foo -print0)
 # in order to be able to produce a list which can be read by `read -r`
 ```
 
+We can also exploit the full capabilities of find, for example let's say
+we want to search recursively all .py files but exclude certain directories
+from our search, we can do that with this:
+
+```python
+files=()
+while read -r -d $'\0' file; do
+    printf "%s\n" "$file"
+    files+=("$file")
+done < <(find -name "*.py" -not -path "./docs/*" -and -not -path "./env/*" -print0)
+
+printf "%s\n" "done"
+```
+
 ## Heredocs and Herestrings
 
 Why they exist: Sometimes storing data in a file is overkill. We might only have a tiny bit of it -- enough
@@ -483,32 +517,36 @@ logic in your script!
 
 ## Bash Shortcuts
 A list of common shortcuts when dealing with bash command line:
-```sh
-CTRL+A  # move to beginning of line
-CTRL+B  # moves backward one character
-CTRL+C  # halts the current command
-CTRL+D  # deletes one character backward or logs out of current session, it is similar to exit
-CTRL+E  # moves to end of line
-CTRL+F  # moves forward one character
-CTRL+G  # aborts the current editing command and ring the terminal bell
-CTRL+J  # same as RETURN
-CTRL+K  # deletes from the cursor to end of line
-CTRL+L  # clears screen 
-CTRL+M  # same as RETURN
-CTRL+N  # next line in command history
-CTRL+O  # same as RETURN, then displays next line in history file
-CTRL+P  # previous line in command history
-CTRL+R  # searches backward
-CTRL+S  # searches forward
-CTRL+T  # transposes two characters
-CTRL+U  # removes backward from cursor to the beginning of line
-CTRL+V  # makes the next character typed verbatim
-CTRL+W  # removes the word behind the cursor
-CTRL+X  # lists the possible filename completions of the current word
-CTRL+Y  # retrieves (yank) last item killed
-CTRL+Z  # stops the current command, resume with fg in the foreground or bg in the background
-```
 
+
+* `CTRL+A` # move to beginning of line
+* `CTRL+B` # moves backward one character
+* `CTRL+C` # halts the current command
+* `CTRL+D` # deletes one character backward or logs out of current session, it is similar to exit
+* `CTRL+E` # moves to end of line
+* `CTRL+F` # moves forward one character
+* `CTRL+G` # aborts the current editing command and ring the terminal bell
+* `CTRL+J` # same as RETURN
+* `CTRL+K` # deletes from the cursor to end of line
+* `CTRL+L` # clears screen 
+* `CTRL+M` # same as RETURN
+* `CTRL+N` # next line in command history
+* `CTRL+O` # same as RETURN, then displays next line in history file
+* `CTRL+P` # previous line in command history
+* `CTRL+R` # searches backward
+* `CTRL+S` # searches forward
+* `CTRL+T` # transposes two characters
+* `CTRL+U` # removes backward from cursor to the beginning of line
+* `CTRL+V` # makes the next character typed verbatim
+* `CTRL+W` # removes the word behind the cursor
+* `CTRL+X` # lists the possible filename completions of the current word
+* `CTRL+Y` # retrieves (yank) last item killed
+* `CTRL+Z` # stops the current command, resume with fg in the foreground or bg in the background
+* `ALT+. ` # cycles through previous arguments
+* `ALT+#`  # useful whenever we want to save the command in history, makes the current command a comment
+* `ALT+f`  # moves forward one word
+* `ALT+b`  # moves backward one word
+* `ALT+d`  # deletes a word
 
 
 
