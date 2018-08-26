@@ -16,7 +16,7 @@ Here some good rules when writing Bash:
 * Don't expect speed in Bash scripts, but if you want to optimize prefer builtins instead of external prograsm
 * Don't use cat but do this: `content=$(< fileName)`
 * Always use the new test command [[ instead of the old test [
-* Use "set +x" and "set -x" to enable debugging mode
+* Use "set +x" and "set -x" to enable/disable debugging mode
 * Use "set -r" to set restricted mode, this can be useful for security reasons
 
 ## Variable Types
@@ -92,6 +92,17 @@ for x in "${my_array[@]}"; do
 done
 ```
 
+### Ternary Operator
+
+Bash supports ternary operators for variable assignments.
+
+```sh
+${varname:-word} # if varname exists and isn't null, return its value; otherwise return word
+${varname:=word} # if varname exists and isn't null, return its value; otherwise set it word and then return its value
+${varname:+word} # if varname exists and isn't null, return word; otherwise return null
+${varname:offset:length} # performs substring expansion. It returns the substring of $varname starting at offset and up to length characters
+```
+
 ### Case Control Structure
 ```sh
 case $LANG in
@@ -107,6 +118,7 @@ esac
 ```
 
 ### Bash Program General Structure
+
 ```sh
 #!/usr/bin/env  bash
 #
@@ -126,8 +138,47 @@ set -eu -o pipefail
     # SIGNAL TRAPS
 main "$@"
 ```
-Let's see the meaning of some debugging techniques with bash:
 
+## Conditionals and Expressions
+
+```sh
+statement1 && statement2  # both statements are true
+statement1 || statement2  # at least one of the statements is true
+
+str1=str2       # str1 matches str2
+str1!=str2      # str1 does not match str2
+str1<str2       # str1 is less than str2
+str1>str2       # str1 is greater than str2
+-n str1         # str1 is not null (has length greater than 0)
+-z str1         # str1 is null (has length 0)
+
+-a file         # file exists
+-d file         # file exists and is a directory
+-e file         # file exists; same -a
+-f file         # file exists and is a regular file (i.e., not a directory or other special type of file)
+-r file         # you have read permission
+-s file         # file exists and is not empty
+-w file         # you have write permission
+-x file         # you have execute permission on file, or directory search permission if it is a directory
+-N file         # file was modified since it was last read
+-O file         # you own file
+-G file         # file's group ID matches yours (or one of yours, if you are in multiple groups)
+
+file1 -nt file2     # file1 is newer than file2
+file1 -ot file2     # file1 is older than file2
+
+-lt     # less than
+-le     # less than or equal
+-eq     # equal
+-ge     # greater than or equal
+-gt     # greater than
+-ne     # not equal
+```
+
+
+## Debugging with bash
+
+Let's see the meaning of some debugging techniques with bash.
 
 In Bash scripts, use set -x (or the variant set -v, which logs raw input,
 including unexpanded variables and comments) for debugging output. Use
@@ -144,12 +195,25 @@ set -euo pipefail
 trap "echo 'error: Script failed: see failed command above'" ERR
 ```
 
+We can also use some flags with bash to debug a script.
+
+Indeed we can easily debug the bash script by passing different options to bash
+command. For example -n will not run commands and check for syntax errors only.
+-v echo commands before running them. -x echo commands after command-line
+processing.
+
+```sh
+bash -n scriptname
+bash -v scriptname
+bash -x scriptname
+```
 
 ## Executing Commands in Shell Scripts
 
-In order to execute a command and save its stdout we should always use $() and not backticks ````, this for two reasons mainly:
-    - $() allows for nested commands, while ```` does not without escaping
-    - $() is POSIX portable and compliant, while ```` does not
+In order to execute a command and save its stdout we should always use $() and not backticks \`\`, 
+this for two reasons mainly:
+    - $() allows for nested commands, while backticks do not without escaping
+    - $() is POSIX portable and compliant, while backticks do not
 
 ## Functions 
 It is a good idea for scripts larger than a screen page to build functions, and make our program more modular as possible.There are no return values in bash, so we can return values by printing a string like:
@@ -170,7 +234,10 @@ my_module_name::my_function_name() {
 all the functions related to a module should be contained inside the relative module file, in the last case the function would be contained in "my_module_name.sh".
 
 To refer to all arguments passed to a function we can use "$@", and to remove the first argument we can use "shift", this is similar to Perl.
+
+
 ## Advanced Redirection
+
 There are more advanced redirection operators from newer versions of bash, the operators are:
     - `<<`
     - `<<<`
@@ -201,7 +268,8 @@ Well we could first save the command output to a file for both command and then 
 diff -u <(ls) <(ls anotherDir/)
 ```
 
-Now let's see the `<<` HEREDOC or HERESTRING (a heredoc with one string) example, this is useful when we want to create strings,
+Now let's see the `<<` HEREDOC or HERESTRING (a heredoc with one string) example,
+this is useful when we want to create strings,
 the most common use of heredocs is dumping documentation, for example:
 
 ```sh
@@ -215,6 +283,7 @@ EOF
 ```
 
 We can have better indentation with `<<` accompanied by `-` format, for example:
+
 ```sh
 usage() {
     cat <<-EOF
@@ -225,16 +294,20 @@ usage() {
 }
 ```
 Another example with herestring but using `<<<` is by using:
+
 ```sh
 grep proud <<<"I am a proud sentence"
 ```
+
 ## Pattern Matching
+
 In Bash we have basically three way for pattern matching
   - Globs (used for files), e.g., * to match a range of files
   - Extended Globs (used for files), this has to be enabled with shopt -s extglob
   - Regex (used for strings), used with the =~ operator
 
 ## Globs
+
 Let's see some example, where we can use globs to select multiple files:
 
 ```sh
@@ -242,12 +315,20 @@ files=(*) #selects all the files in the current directory
 files=(../*.tar.gz) #selects all the .tar.gz files in the previous directory
 ```
 
+
 ## Extended Globs Examples
+
 Once we have enabled extended globs with:
+
 ```sh
 shopt -s extglob
 ```
-we can tell things such as "do this for all files except this" or "do this for this file or this file" and so on, to a certain degree extended globs and regex are interchangeable in terms of capabilities. Let's see some example:
+
+we can tell things such as "do this for all files except this" or 
+"do this for this file or this file" and so on, to a certain degree 
+extended globs and regex are interchangeable in terms of capabilities. 
+Let's see some example:
+
 ```sh
 #remember that the * glob doesn't match hidden files, but .* matches only hidden files...
 shopt -s extglob
@@ -258,8 +339,11 @@ rm !(*.txt) #removes all files except those ending with .txt
 ls !(*jpg|*bmp)
 ```
 
+
 ## Regex
+
 Let's see an example of regex:
+
 ```sh
 # Regex check is done within
 myregex='co[ao]l'
@@ -269,8 +353,12 @@ else
 	echo "not matched"
 fi
 ```
+
+
 ## Temporary Files
+
 Occasionally we need to create temporary files to store data, in order to do this we can do:
+
 ```sh
 my_file=$(mktemp)
 printf "%s" "ciao" > "$my_file"
@@ -280,7 +368,7 @@ rm "$my_fil"ed
 
 ## Looping and Parsing Data
 When we loop over data (either from a file or a variable) it is good practice to use while and use the IFS field separato variable, let's see some examples:
-:
+
 ```sh
 # loop through a file delimited by newlines
 while IFS=$'\n' read -r line; do
@@ -330,6 +418,8 @@ Remember that when dealing with arrays, @ expands multiple arguments, while * co
 
 ## String and Arrays Manipulations
 Let's see some example of string manipulation which will allow us to use builtins instead of awk, sed or perl, in order to gain some speed and not create subprocesses.
+
+
 ```sh
 #Let's see how to create an array
 names=("Bob" "Peter" "$USER" "Big Bad John")
@@ -388,6 +478,18 @@ printf "%s\n" "${ip_elements[2]}"
 printf "%s\n" "${ip_elements[1]}"
 printf "%s\n" "${ip_elements[0]}"
 ```
+
+
+### String Subbstitution Examples
+
+`${variable#pattern}` # if the pattern matches the beginning of the variable's value, delete the shortest part that matches and return the rest
+`${variable##pattern}` # if the pattern matches the beginning of the variable's value, delete the longest part that matches and return the rest
+`${variable%pattern}` # if the pattern matches the end of the variable's value, delete the shortest part that matches and return the rest
+`${variable%%pattern}` # if the pattern matches the end of the variable's value, delete the longest part that matches and return the rest
+`${variable/pattern/string}`  # the longest match to pattern in variable is replaced by string. Only the first match is replaced
+`${variable//pattern/string}` # the longest match to pattern in variable is replaced by string. All matches are replaced
+`${#varname}` # returns the length of the value of the variable as a character string
+
 
 ## Associative Arrays
 

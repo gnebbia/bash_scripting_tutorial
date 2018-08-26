@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Useless Use of Cat Award</title>
+<link rev="made" href="http://www.iki.fi/era/feedback.html">
+</head>
+<body vlink="#600060" text="#000000" link="#0000ff" bgcolor="#fffff0" alink="#ff0000">
+<h1>Useless Use of Cat Award</h1>
+<p>
+If you've been reading
+<a href="news:comp.unix.shell"><tt>comp.unix.shell</tt></a>
+or any of the related groups
+<a href="news:comp.unix.questions">(<tt>comp.unix.questions</tt></a>
+inter alia)
+for any amount of time, this should be a familiar topic. 
+</p><p>
+I made this web page on the topic primarily so I'd have a simpler URL 
+than one of those ghastly Deja News searches to hand to people. I've
+tried to reconstruct Randal's standard form letter from looking at his 
+postings
+<a href="#forms">(see end)</a>
+and added some comments of my own.
+</p><p>
+If you came here looking for material about abuse of feline animals, try
+<a href="http://www.altavista.com/cgi-bin/query?pg=aq&amp;text=yes&amp;q=title%3a%22kitty+porn%22+and+not+%28xxx+or+title%3a%22persian+kitty%22+or+title%3acorporation%29">this Alta Vista search</a>
+instead.
+</p><p>
+Contents:
+</p><ul>
+<li> Useless Use of
+<a href="#cat"><code>cat</code></a>
+</li><li> Useless Use of
+<a href="#kill"><code>kill -9</code></a>
+</li><li> Useless Use of
+<a href="#echo"><code>echo</code></a>
+</li><li> Useless Use of
+<a href="#ls"><code>ls *</code></a>
+</li><li> Useless Use of
+<a href="#wc"><code>wc -l</code></a>
+</li><li> Useless Use of
+<a href="#grep"><code>grep | awk</code></a>
+</li><li> Useless Use of
+<a href="#backticks">Backticks</a>
+</li><li> Useless Use of
+<a href="#test"><code>test</code></a>
+</li><li>
+<a href="#gripes">Assorted Other Gripes</a>
+</li><li>
+<a href="#readme">Related Resources</a>
+</li><li>
+<a href="#forms">Reconstructions of Randal's Form Letters</a>
+</li></ul>
+<hr>
+<h2>
+<a name="cat">
+The Useless Use of Cat Award
+</a></h2>
+The venerable
+<a href="http://www.stonehenge.com/~merlyn/">Randal L. Schwartz</a>
+hands out Useless Use of Cat Awards from time to time; 
+you can see some recent examples in 
+<a href="http://search.dejanews.com/dnquery.xp?QRY=&amp;ST=PS&amp;DBS=1&amp;defaultOp=AND&amp;maxhits=25&amp;format=terse&amp;showsort=date&amp;groups=&amp;authors=&amp;subjects=useless+%26+use+%26+cat+%26+award&amp;fromdate=Jan+1+1970&amp;todate=">Deja News.</a>
+(The subject line really says "This Week's Useless Use of Cat Award" 
+although the postings are a lot less frequent than that nowadays). 
+The actual award text is basically the same each time, and the ensuing 
+discussion is usually just as uninteresting, but there are some refreshing
+threads there among all the flogging of this dead horse. 
+<p>
+The oldest article Deja News finds is from 1995, but it's actually a 
+followup to an earlier article. By Internet standards, this is thus 
+an Ancient Tradition.
+</p><p>
+Exercise: Try to find statistically significant differences between 
+the followups from 1995 and the ones being posted today. 
+</p><p>
+(See below for a
+<a href="#uucaletter">reconstruction of the Award text.)</a>
+</p><p>
+Briefly, here's the collected wisdom on using <tt>cat</tt>:
+</p><blockquote>
+The purpose of <tt>cat</tt> is to concatenate (or "catenate")
+files. If it's only one file, concatenating it with
+nothing at all is a waste of time, and costs you a process.
+</blockquote>
+The fact that the same thread ("but but but, I think it's cleaner /
+nicer / not that much of a waste / my privelege to waste processes!")
+springs up virtually every time the Award is posted is also Ancient
+Usenet Tradition.
+<p>
+Of course, as Heiner points out, using <code>cat</code> on a single
+file to view it from the command line is a valid use of <code>cat</code>
+(but you might be better off if you get accustomed to using <code>less</code>
+for this instead).
+</p><p>
+In a recent thread on <code>comp.unix.shell</code>, the following
+example was posted by Andreas Schwab as another Useful Use of Cat 
+on a lone file:
+</p><blockquote><pre>	{ foo; bar; cat mumble; baz } | whatever
+</pre></blockquote>
+Here, the contents of the file <code>mumble</code> are output
+to stdout after the output from the programs <code>foo</code> and
+<code>bar</code>, and before the output of <code>baz</code>. All
+the generated output is piped to the program <code>whatever</code>.
+(Read up on shell programming constructs if this was news to 
+you&nbsp;<code>:-)</code>
+<h2>
+Other Fun Awards
+</h2>
+This could evolve into a good listing of "don't do that" shell 
+programming idioms. 
+<h3>
+<a name="kill">
+Useless Use of Kill -9
+</a></h3>
+Randal also posts his 
+<a href="http://search.dejanews.com/dnquery.xp?QRY=&amp;ST=PS&amp;DBS=1&amp;defaultOp=AND&amp;maxhits=25&amp;format=terse&amp;showsort=score&amp;groups=&amp;authors=&amp;subjects=useless+%26+use+%26+kill&amp;fromdate=Jan+1+1970&amp;todate=">Useless Use of Kill -9 Award</a>
+although much less frequently.
+<p>
+(See below for a
+<a href="#uuk9letter">reconstruction of the Award text.</a>
+It explains the issues clearly enough.)
+</p><h3>
+<a name="echo">
+Useless Use of <code>echo</code>
+</a></h3>
+<p>
+This is really a special case of
+<a href="#backticks">Useless Use of Backticks</a>
+but it deserves its own section because it's something you see
+fairly frequently.
+</p><p>
+The canonical form of this is something like
+</p><blockquote><pre>	variable="something here, or perhaps even the result of backticks"
+	some command -options `echo $variable`
+</pre></blockquote>
+<p>
+Depending a little bit on what exactly you have the variable for, 
+this can be reduced at least to
+</p><blockquote><pre>	variable="something here, or perhaps even the result of backticks"
+	some command -options $variable
+</pre></blockquote>
+<p>
+and there is often no real reason to even think of using echo in backticks
+when the simpler construct will do.
+</p><p>
+(There is a twist: <code>echo</code> will "flatten" any whitespace in
+<code>$variable</code> into a single space -- unless you double-quote
+<code>$variable</code>, of course --, and sometimes you can legitimately
+use echo in backticks for this side effect. But that's rarely necessary or
+useful, and so most often, this is just a misguided use of echo.)
+</p><p>
+There is another example in the next section, and a longer rant about
+<a href="#backticks">Useless Use of Backticks</a>
+further down the page. There is also a parallel, slightly different
+example on the
+<a href="http://porkmail.org/era/unix/award-example-backticks.html#echo-backticks">Backticks Example page</a>
+</p><h3>
+<a name="ls">
+Useless Use of <code>ls *</code>
+</a></h3>
+<p>
+Very clever. Usually this is seen as part of a <code>for</code> loop:
+</p><blockquote><pre>	for f in `ls *`; do
+		command "$f"   # newbies will often forget the quotes, too
+	done
+</pre></blockquote>
+Of course, the <code>ls</code> is not very useful. It will just waste
+an extra process doing absolutely nothing. The <code>*</code> glob
+will be expanded by the shell before <code>ls</code> even gets to
+see the file names (never mind that <code>ls</code> lists all files by
+default anyway, so naming the files you want listed is redundant here).
+<p>
+Here's a related but slightly more benign error
+(because <code>echo</code> is often built into the shell):
+</p><blockquote><pre>	for f in `echo *`; do
+		command "$f"
+	done
+</pre></blockquote>
+But of course the backticks are still useless, the glob itself already
+does the expansion of the file names. (See
+<a href="#echo">Useless Use of <code>echo</code></a>
+above.) What was meant here was obviously
+<blockquote><pre>	for f in *; do
+		command "$f"
+	done
+</pre></blockquote>
+Additionally, oftentimes the command in the loop doesn't even need to
+be run in a for loop, so you might be able to simplify further and say
+<blockquote><pre>	command *
+</pre></blockquote>
+A different issue is how to cope with a glob which expands into file
+names with spaces in them, but the for loop or the backticks won't
+help with that (and will even make things harder). The plain glob
+generates these file names just fine;
+<a href="http://porkmail.org/era/unix/award-example-ls.html">click here for an example.</a>
+See also 
+<a href="#backticks">Useless Use of Backticks</a>
+<p>
+Finally, as Aaron Crane points out, the result of <code>ls *</code>
+will usually be the wrong thing if you do it in a directory with
+subdirectories; <code>ls</code> will list the contents of those
+directories, not just their names.
+</p><h3>
+<a name="wc">
+Useless Use of <code>wc -l</code>
+</a></h3>
+This is my personal favorite. There is actually a whole class of 
+"Useless Use of (something) | grep (something) | (something)" 
+problems but this one usually manifests itself in scripts riddled
+by useless backticks and pretzel logic. 
+<p>
+Anything that looks like
+</p><blockquote><pre>	<var>something</var> | grep '..*' | wc -l
+</pre></blockquote>
+can usually be rewritten like something along the lines of 
+<blockquote><pre>	<var>something</var> | grep -c .   # Notice that . is better than '..*'
+</pre></blockquote>
+or even (if all we want to do is check whether <var>something</var>
+produced any non-empty output lines)
+<blockquote><pre>	<var>something</var> | grep . &gt;/dev/null &amp;&amp; ...
+</pre></blockquote>
+(or <code>grep -q</code> if your grep has that). 
+<p>
+If <var>something</var> is reasonably coded, it might even already
+be setting its exit code to tell you whether it succeeded in doing
+what you asked it to do; in that case, all you have to check is
+the exit code:
+</p><blockquote><pre>	<var>something</var> &amp;&amp; ...
+</pre></blockquote>
+<p>
+I used to have a really wretched example of clueless code 
+(which I had written up completely on my own, to protect the innocent)
+which I've moved to a 
+<a href="http://porkmail.org/era/unix/award-example-backticks.html">separate page</a>
+and annotated a little bit. It expands on the above and also has a 
+bit about useless use of backticks
+<a href="#backticks">(q.v.)</a>
+</p><p>
+Here's a contribution I got from Aaron Crane (thanks!):
+</p><blockquote>
+<code>grep -c</code> can actually solve a large class of problems that
+<code>grep | wc -l</code> can't.
+If what interests you is the count for each of a group of files,
+then the only way to do it with <code>grep | wc -l</code> is
+to put a loop round it. So where I had this:
+<blockquote><pre>	grep -c "^~h" [A-Z]*/hmm[39]/newMacros
+</pre></blockquote>
+the naive solution using <code>wc -l</code> would have been
+<blockquote><pre>	for f in [A-Z]*/hmm[39]/newMacros; do
+	    # or worse, for f in `ls [A-Z]*/hmm[39]/newMacros` ...
+	    echo -n "$f:"
+	    # so that we know which file's results we're looking at
+	    grep "^~h" "$f" | wc -l
+	    # gag me with a spoon
+	done
+</pre></blockquote>
+and notice that we also had to fiddle to get the output in a
+convenient form.
+</blockquote>
+<h3>
+<a name="grep">
+Useless Use of grep | awk and grep | sed
+</a></h3>
+Here's another one:
+<blockquote><pre>ps -l | grep -v '[g]rep' | awk '{print $2}'
+</pre></blockquote>
+<p>
+<small>
+(Of course, this is merely an example. If you have <code>lsof</code>
+it's probably a better solution to this particular problem; also 
+the output of <code>ps</code> varies wildly from system to system
+so you might want to print something else than <code>$2</code> and
+use completely different options to <code>ps</code>.)
+</small>
+</p><p>
+Remember that <code>sed</code> and <code>awk</code> are 
+glorified variants of <code>grep</code>. 
+So why use grep at all?
+</p><blockquote><pre>ps -l | awk '!/[a]wk/{print $2}'
+</pre></blockquote>
+Usually you'd like the regex to be tighter than this, 
+especially if your login might happen to include the letters 
+<code>grep</code> or <code>awk</code>&nbsp;...
+<p>
+<small></small></p><blockquote><small>
+True Story from Real Life: an older version of the GNATS system would
+think my real name was "System Operator" because it just went looking
+for the first occurrence of the letters e-r-a in the
+<code>/etc/passwd</code> file. (Well, actually, it thought my name was 
+"System Era". It took me a while to figure out how it arrived at this 
+somewhat whimsical conclusion. Incidentally, you also have to wonder 
+why the author thought my real name was worth knowing, and if this is 
+the right way to get that information. The end goal was to produce a
+template for an e-mail message -- perhaps my MUA would already know
+my real name, and even be able to produce nice e-mail headers for GNATS?)
+</small></blockquote>
+<h3>
+<a name="backticks">
+Useless Use of Backticks
+</a></h3>
+This is a sort of meta-award, or a corollary of several of the others. 
+It merely consists of the general observation that shell scripts with
+lots of backticks in them are often possible to optimize and clean up
+a lot.
+<p>
+The
+<a href="http://porkmail.org/era/unix/award-example-backticks.html">cluelessness example (I've put it on a separate page)</a>
+contains a lot of badly chosen backticks and a somewhat longer
+discussion of what exactly they can accomplish, and some ideas for
+how to do it differently.
+</p><p>
+Obviously, backticks are a valid construction, and you can put them
+to good use in many shell scripts. I have simply noticed that newbie
+scripters often generously treat backticks as the hammer for all those
+nails they see.
+</p><h4>
+<a name="arg-max">
+Dangerous Backticks
+</a></h4>
+A special idiom to pay attention to, because it's basically always wrong,
+is this:
+<blockquote><pre>	for f in `cat file`; do
+	    ...
+	done
+</pre></blockquote>
+Apart from the classical
+<a href="#cat">Useless Use of Cat</a>
+here, the backticks are outright dangerous, unless you <b>know</b>
+the result of the backticks is going to be less than or equal to how
+long a command line your shell can accept. (Actually, this is a kernel
+limitation. 
+<a href="http://porkmail.org/era/unix/arg-max.html">The constant <tt>ARG_MAX</tt> in your <tt>limits.h</tt></a>
+should tell you how much your own system can take. POSIX requires 
+<tt>ARG_MAX</tt> to be at least 4,096 bytes.)
+<p>
+Incidentally, this is also one of the Very Ancient Recurring Threads
+in
+<a href="news:comp.unix.shell"><tt>comp.unix.shell</tt></a>
+so don't make the mistake of posting anything that resembles this.
+</p><p>
+The right way to do this is
+</p><blockquote><pre>	while read f; do
+	    ...
+	done &lt;file
+</pre></blockquote>
+or, in cases where the command in backticks was something more 
+complicated than a (Useless Use of) <tt>cat</tt> of a single file,
+<blockquote><pre>	command that used to be in backticks |
+	while read f; do
+	    ...
+	done
+</pre></blockquote>
+The <tt>ARG_MAX</tt> warning applies to other constructs than 
+<tt>for</tt> loops too, of course. Generally, commands that look like
+<blockquote><pre>	command `other command`
+</pre></blockquote>
+are usually safer with <tt>xargs</tt>:
+<blockquote><pre>	other command | xargs command
+</pre></blockquote>
+The classic example is running something on each one of a number of files
+listed by <tt>find</tt>. An additional problem here is that <tt>find</tt> 
+might find files whose names contain line breaks. GNU <tt>find</tt> can
+even cope with that, by using the null character as the file name separator.
+<blockquote><pre>	# Note that we use -print0 instead of -print
+	# This is a GNU find -specific option
+	# Similarly, the -0 option to xargs is a GNU feature
+	find -options -more -options -print0 |
+	xargs -r0 command
+</pre></blockquote>
+With normal <code>find</code>, a user could create a file with 
+a newline in its name, tricking you into, well, at least missing that
+file, and potentially something a lot more dangerous. (Imagine that
+you have a nightly <code>cron</code> job which runs as root and which
+removes old files from <code>/tmp</code>. Now imagine that a malicious
+user creates a directory in <code>/tmp</code> whose name ends in newline,
+and in that directory creates <code>etc/</code> and <code>etc/passwd</code>.
+Then wait for it to grow old, or modify the inode's date stamp with
+<code>touch</code>&nbsp;...)
+<p>
+In case something is still not obvious, the only disallowed file name
+characters under Unix are the null character and slash. If a file is
+called something like <code>/tmp/moo&lt;newline&gt;/etc/passwd</code>,
+normal <code>find /tmp -print</code> would output
+</p><blockquote><pre>/tmp/moo
+/etc/passwd
+</pre></blockquote>
+and <code>xargs</code> would see two file names here. Changing the record
+separator to ASCII 0 means it's now valid for a file name to span
+multiple lines, so this becomes a non-issue.
+<h3>
+<a name="test">
+Useless Use of Test
+</a></h3>
+This was suggested by Chris Thompson in 
+<a href="news:comp.unix.shell"><tt>comp.unix.shell</tt>:</a>
+<blockquote>
+All these UUOC postings remind me of one of my least favourite constructs in
+(Bourne, FTSOE) shell scripts:
+<blockquote><pre>	mangle the world
+	if [ $? -ne 0 ] ; then 
+	    echo "Oh dear, mangling the world failed horribly" \
+	        &gt;&amp;2  # shortened, stderr redirection by your humble HTMLizer
+	    putback the world
+	    exit 255
+	fi
+</pre></blockquote>
+when
+<blockquote><pre>	if mangle the world ; then : ; else
+	    echo "Oh dear, mangling the world failed horribly" \
+	        &gt;&amp;2 # I'm still here
+	    putback the world
+	    exit 255
+	fi
+</pre></blockquote>
+seems to me much cleaner (even when the "then" clause can't be used in a
+more economical way, or, as with some shells, omitted).
+</blockquote>
+(Something like this is also covered in the 
+<a href="#wc"><tt>wc -l</tt> section above.)</a>
+<h3>
+<a name="gripes">
+Assorted Other Gripes
+</a></h3>
+Jon LaBadie sent me the following list (thanks!):
+<p>
+<small>
+(I'll integrate it better with this page as soon as I have the time;
+I've been keeping it in my inbox for an embarrassing amount of time
+so I thought I'd better at least move it here where people can see it.)
+</small>
+</p><blockquote>
+Some things that bug me:
+<ul>
+<li>
+Regular expressions used for searching (not substituting) that
+begin or end with '.*'.  Actually 'anything*' or 'anything?'.
+If you are willing to accept "zero repetitions" of the anything,
+why specify it?
+</li><li>
+Awk scripts that are basically cut unless reordering of fields
+is needed.
+</li><li>
+Case conversions in comp.unix.shell (ex. how do I change
+my file names from UC to LC?) using tr/sed/awk/??? when
+some shells have builtin case conversions.
+</li><li>
+Complex schemes to basically eliminate certain chars.  For
+example DOS lines to UNIX lines.  Sure read dos2unix(1),
+but using sed/awk/... when "tr -d '^M'" is all that is needed.
+</li><li>
+Global changes to a file using sed to create a tmp file and
+renaming the tmp file, when an "ed(1)" here document would
+do fine.
+</li></ul>
+</blockquote>
+<p>
+Frederick J. Sena comments;
+</p><blockquote>
+I <em>really</em> hate useless "kill -9"'s
+and "rm -fr"'s!
+After that, the next most annoying thing
+is people who use a useless "chmod 777"
+to make a file writable.
+</blockquote>
+That's a good observation and
+another example of the same pattern;
+having only the heavy-duty sledgehammer
+in your toolbox, and breaking all
+the smaller nails with it.
+<p>
+Frederick also remarks:
+</p><blockquote>
+I disagree with your awk/cut comment,
+as I often use awk for everything
+and cut for nothing
+because the syntax for awk is so much
+cleaner for one liners and
+I don't have to RTFM so much.
+</blockquote>
+I'll counter that 
+awk is overkill,
+and you don't need to reread the cut manual after
+you've read it once or twice; that's my experience.
+Also cut much more clearly conveys to the reader
+what is going on -- a small awk script
+certainly should not take a lot of time to decode,
+but if you do it <em>too</em> quickly,
+there might be subtle points which are easy to miss.
+By contrast, cut doesn't have those subtleties,
+for better or for worse.
+<p>
+Despite the looks of this embarrassing section, I do appreciate
+comments and additional ideas for this page. 
+<a href="http://www.iki.fi/era/feedback.html">Send me mail</a>
+with your suggestions!
+</p><h2>
+<a name="readme">
+Related Resources
+</a></h2>
+Or, Other Diatribes. 
+<ul>
+<li>
+<a href="http://language.perl.com/versus/csh.whynot">Csh Programming Considered Harmful</a>
+by Tom Christiansen
+</li><li>
+<a href="http://porkmail.org/era/unix/guis.txt">GUIs Considered Harmful</a>
+(ditto)
+</li></ul>
+Additionally, you should probably be aware of the following FAQs:
+<ul>
+<li>
+<a href="http://www.faqs.org/faqs/unix-faq/shell/intro/">Welcome to <code>comp.unix.shell</code></a>
+</li><li>
+<a href="http://www.faqs.org/faqs/unix-faq/shell/shell-differences/">Unix shell differences and how to change your shell</a>
+</li><li>
+<a href="http://www.faqs.org/faqs/unix-faq/faq/">Unix Frequently Asked Questions</a>
+</li></ul>
+All of these are available in a nice browsable format from
+<a href="http://www.faqs.org/faqs/by-newsgroup/comp/comp.unix.shell.html">the <code>faqs.org</code> archive</a>
+(which is where the above links will take you).
+<p>
+I have a
+<a href="http://porkmail.org/era/unix/index.html">small collection of Unix links</a>
+with some more information, too.
+<a name="forms">
+</a></p><hr><a name="forms">
+</a><h3>
+<a name="uucaletter">
+Useless Use of Cat Award form letter
+</a></h3>
+(Quote abomination)
+<blockquote><pre>And of course, if you've been following along for a week or two, you know
+that this (BING!) is a Useless Use of Cat!
+
+Rememeber, nearly all cases where you have:
+
+        cat file | some_command and its args ...
+
+you can rewrite it as:
+
+        &lt;file some_command and its args ...
+
+and in some cases, such as this one, you can move the filename
+to the arglist as in:
+
+        some_command and its args ... file
+
+Just another Useless Use of Usenet,
+</pre></blockquote>
+(.signature)
+<hr>
+<h3>
+<a name="uuk9letter">
+Useless Use of Kill -9 form letter
+</a></h3>
+(Quote abomination)
+<blockquote><pre>No no no.  Don't use kill -9.
+
+It doesn't give the process a chance to cleanly:
+
+1) shut down socket connections
+
+2) clean up temp files
+
+3) inform its children that it is going away
+
+4) reset its terminal characteristics
+
+and so on and so on and so on.
+
+Generally, send 15, and wait a second or two, and if that doesn't
+work, send 2, and if that doesn't work, send 1.  If that doesn't,
+REMOVE THE BINARY because the program is badly behaved!
+
+Don't use kill -9.  Don't bring out the combine harvester just to tidy
+up the flower pot.
+
+Just another Useless Use of Usenet,
+</pre></blockquote>
+(.signature)
+<hr>
+$Id: award.prep,v 1.47 2000/12/16 09:24:38 era Exp $
+<p>
+<small>
+)-:&nbsp;ylwols hguoht( depoh dah I naht retteb neve ,dekrow ti yltnerappA --
+<a href="http://www.stonehenge.com/merlyn/refindex.html">.egap "elpoeP looC" s'ladnaR</a>
+no dedulcni ti teg ot si egap siht fo esoprup elohw eht ,yllaer oN
+</small>
+</p><p>
+era eriksson
+*
+<a href="http://www.iki.fi/era/">home page </a>
+
+
+
+</p></body></html>
