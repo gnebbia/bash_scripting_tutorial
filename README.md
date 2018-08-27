@@ -37,7 +37,9 @@ echo "$BASH_VERSION" : Contains a string describing the version of BASH
 
 
 ## Control Structures
+
 There are different control structures as in general programming languages:
+
 ### If Conrol Structure
 ```sh
 if [[ condition ]]; then
