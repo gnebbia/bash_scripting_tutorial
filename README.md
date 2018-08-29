@@ -126,7 +126,7 @@ esac
 #
 # AUTHORS, LICENSE AND DOCUMENTATION
 #
-set -eu -o pipefail
+set -e -o pipefail
 # READONLY VARIABLES HERE
 # GLOBAL VARIABLES HERE
 
@@ -193,7 +193,7 @@ like this, which will make it detect and abort on common errors and print a
 message:
 
 ```sh
-set -euo pipefail 
+set -eo pipefail 
 trap "echo 'error: Script failed: see failed command above'" ERR
 ```
 
@@ -218,7 +218,10 @@ this for two reasons mainly:
     - $() is POSIX portable and compliant, while backticks do not
 
 ## Functions 
-It is a good idea for scripts larger than a screen page to build functions, and make our program more modular as possible.There are no return values in bash, so we can return values by printing a string like:
+It is a good idea for scripts larger than a screen page to build functions, 
+and make our program more modular as possible.There are no return values in bash, 
+so we can return values by printing a string like:
+
 ```sh
 my_function_name() {
     ...
