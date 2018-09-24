@@ -262,6 +262,12 @@ What if the content on which we want to apply our tr is not in a file but in a v
 content="this is an example string"
 tr ' ' '\n' <<< "$content"
 ```
+Another example can be:
+
+```sh
+wc -w <<< "$( sed -n '1p' words )"
+```
+
 now let's consider another scenario, let's say we want to get a diff between two files, we would normally do:
 ```sh
 diff -u file1 file2
