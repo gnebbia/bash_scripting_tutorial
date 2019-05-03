@@ -442,6 +442,7 @@ myarr=($example) #this creates an array from a string
 
 echo "${myarr[@]:0:4}" #prints only from element 0 to 4 of the array
 
+
 echo "${#Unix[@]}" #prints the number of elements
 
 echo "${#Unix[3]}" #prints the length of the 4th element of the array
@@ -464,6 +465,9 @@ echo "${example#*c}"   #ecars and dragons
 echo "${example##*c}"  #ars and dragons
 echo "${example%c*}"   #this is an example, string with race
 echo "${example%%c*}"  #this is an example, string with ra
+
+echo "${example:3}"   # Remove the first three chars (leaving 4..end)
+echo "${example::3}"  # Return the first three characters
 
 #Let's see still some other example:
 VAR=foofoobar
