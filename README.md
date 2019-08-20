@@ -636,34 +636,46 @@ logic in your script!
 A list of common shortcuts when dealing with bash command line:
 
 
-* `CTRL+A` # move to beginning of line
-* `CTRL+B` # moves backward one character
-* `CTRL+C` # halts the current command
-* `CTRL+D` # deletes one character backward or logs out of current session, it is similar to exit
-* `CTRL+E` # moves to end of line
-* `CTRL+F` # moves forward one character
-* `CTRL+G` # aborts the current editing command and ring the terminal bell
-* `CTRL+J` # same as RETURN
-* `CTRL+K` # deletes from the cursor to end of line
-* `CTRL+L` # clears screen 
-* `CTRL+M` # same as RETURN
-* `CTRL+N` # next line in command history
-* `CTRL+O` # same as RETURN, then displays next line in history file
-* `CTRL+P` # previous line in command history
-* `CTRL+R` # searches backward
-* `CTRL+S` # searches forward
-* `CTRL+T` # transposes two characters
-* `CTRL+U` # removes backward from cursor to the beginning of line
-* `CTRL+V` # makes the next character typed verbatim
-* `CTRL+W` # removes the word behind the cursor
-* `CTRL+X` # lists the possible filename completions of the current word
-* `CTRL+Y` # retrieves (yank) last item killed
-* `CTRL+Z` # stops the current command, resume with fg in the foreground or bg in the background
-* `ALT+. ` # cycles through previous arguments
-* `ALT+#`  # useful whenever we want to save the command in history, makes the current command a comment
-* `ALT+f`  # moves forward one word
-* `ALT+b`  # moves backward one word
-* `ALT+d`  # deletes a word
+* `CTRL+a`  # move to beginning of line
+* `CTRL+b`  # moves backward one character
+* `CTRL+c`  # halts the current command
+* `CTRL+d`  # deletes one character backward or logs out of current session, it is similar to exit
+* `CTRL+e`  # moves to end of line
+* `CTRL+f`  # moves forward one character
+* `CTRL+g`  # aborts the current editing command or search mode and rings the terminal bell
+* `CTRL+j`  # same as RETURN
+* `CTRL+k`  # deletes from the cursor to end of line
+* `CTRL+l`  # clears screen 
+* `CTRL+m`  # same as RETURN
+* `CTRL+n`  # next line in command history
+* `CTRL+o`  # same as RETURN, then displays next line in history file
+* `CTRL+p`  # previous line in command history
+* `CTRL+r`  # searches backward
+* `CTRL+s`  # searches forward
+* `CTRL+t`  # swaps two characters
+* `CTRL+u`  # removes backward from cursor to the beginning of line
+* `CTRL+v`  # makes the next character typed verbatim
+* `CTRL+w`  # removes the word behind the cursor
+* `CTRL+x`  # lists the possible filename completions of the current word
+* `CTRL+y`  # retrieves (yank) last item killed
+* `CTRL+z`  # stops the current command, resume with fg in the foreground or bg in the background
+* `CTRL+xx` # Toggle between the start of line and current cursor position
+* `CTRL+_`  # undo
+* `ALT+. `  # cycles through previous arguments
+* `ALT+#`   # useful whenever we want to save the command in history, makes the current command a comment
+* `ALT+f`   # moves forward one word
+* `ALT+b`   # moves backward one word
+* `ALT+d`   # deletes a word
+* `ALT+r`   # cancel the changes and put back the line as it was in the history (revert)
+* `ALT+t`   # swaps two words
+* `^ab^de`  # run previous command, replacing ab with de
+* `!str`    # repeat the last command which was starting with "str"
+* `!str:p`  # prints the last command starting with "str"
+* `!str:2`  # second argument to last command starting with "str"
+* `!!`      # repeat last command
+* `!*`      # all arguments of previous command
+* `!$`      # last argument of previous command
+* `!n:p`    # print last command starting with n
 
 
 
