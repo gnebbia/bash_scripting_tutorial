@@ -567,6 +567,36 @@ use awk or bc, let's see now some example of integer math with pure bash:
 count=$(( $count + 1 ))
 ```
 
+Another example:
+```sh
+read x
+read y
+
+echo "$((x + y))"
+echo "$((x - y))"
+echo "$((x * y))"
+echo "$((x / y))" # returns the integer part of the division
+echo "$((x % y))" # returns the module of division
+
+# notice that it is equivalent to write $x or x inside the double parenthesis
+```
+
+Another example, is X greater than Y?
+```sh
+read x
+read y
+
+z="$((x - y))"
+
+if  ((z == 0)); then
+    echo "X is equal to Y"
+elif ((z > 0 )); then
+    echo "X is greater than Y"
+else
+    echo "X is less than Y"
+fi
+```
+
 ## Command groups
 
 Command groups can be used to run multiple commands and have a single redirection
