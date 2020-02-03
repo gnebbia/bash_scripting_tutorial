@@ -48,7 +48,7 @@ fi
 ```
 or:
 ```sh
-if((a<b)); then
+if ((a<b)); then
     ...
 fi
 ```
@@ -108,16 +108,29 @@ ${varname:offset:length} # performs substring expansion. It returns the substrin
 ### Case Control Structure
 ```sh
 case $LANG in
-	en*) echo 'Hello!' ;;
-	fr*) echo 'Salut!' ;;
-	de*) echo 'Guten Tag!' ;;
-	nl*) echo 'Hallo!' ;;
-	it*) echo 'Ciao!' ;;
-	es*) echo 'Hola!' ;;
-	C|POSIX) echo 'hello world' ;;
-	*) echo 'I do not speak your language.' ;;
+    en*) echo 'Hello!' ;;
+    fr*) echo 'Salut!' ;;
+    de*) echo 'Guten Tag!' ;;
+    nl*) echo 'Hallo!' ;;
+    it*) echo 'Ciao!' ;;
+    es*) echo 'Hola!' ;;
+    C|POSIX) echo 'hello world' ;;
+    *) echo 'I do not speak your language.' ;;
 esac
 ```
+
+let's see another example:
+```sh
+read ans
+
+case "$ans" in
+#List patterns for the conditions you want to meet
+    [nN]) echo "NO";;
+    [yY]) echo "YES";;
+    *) echo "Wrong input";;
+esac
+```
+
 
 ### Bash Program General Structure
 
@@ -581,6 +594,33 @@ echo "$((x % y))" # returns the module of division
 # notice that it is equivalent to write $x or x inside the double parenthesis
 ```
 
+We can do also floating point math by using bc, let's be sure to call
+bc with the `-l` flag which allows for long precision math and other
+math library functions. Let's see an example:
+```sh
+# read an arbitrary math expression
+read expression
+
+# perform the operation with bc -l
+res=$(bc -l <<<"$expression")
+
+# round the result to three digits
+printf "%.3f" "$res"
+```
+
+We can also round a result a priori (this is also a good choice)
+by instructing the desired precision to bc, for example:
+```sh
+# read an arbitrary math expression
+read expression
+
+# perform the operation with bc -l and specifying the precision
+res=$(bc -l <<<" scale=3; "$expression" ")
+
+# print the rounded result to three digits
+printf "%s" "$res"
+```
+
 Another example, is X greater than Y?
 ```sh
 read x
@@ -596,6 +636,23 @@ else
     echo "X is less than Y"
 fi
 ```
+
+We can also build more complex conditions by doing:
+```sh
+read x
+read y
+read z
+
+if (( (x==y) && (x==z) ));then
+    echo "EQUILATERAL"
+elif (( (x!=y) && (y!=z) && (x!=z)  ));then
+    echo "SCALENE"
+else
+    echo "ISOSCELES"
+fi
+```
+
+
 
 ## Command groups
 
