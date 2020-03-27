@@ -440,6 +440,19 @@ done < "$file"
 ```
 Remember that when dealing with arrays, @ expands multiple arguments, while * concatenates them, so never do for field in `"${array[*]}"` !
 
+We can also read an array from the stdin where each element is separated
+by a newline by doing:
+```sh
+i=0
+while read line
+do
+    array[$i]=$line
+    ((i+=1))
+done
+
+echo ${array[@]}
+```
+
 ## String and Arrays Manipulations
 Let's see some example of string manipulation which will allow us to use builtins instead of awk, sed or perl, in order to gain some speed and not create subprocesses.
 
@@ -453,7 +466,8 @@ example=" this is an example how do you do ?"
 
 myarr=($example) #this creates an array from a string
 
-echo "${myarr[@]:0:4}" #prints only from element 0 to 4 of the array
+echo "${myarr[@]:0:4}" #prints only from element 0 and gets 4 elements from that
+echo "${myarr[@]:2:4}" #prints only from element 2 and gets 4 elements from that
 
 
 echo "${#Unix[@]}" #prints the number of elements
